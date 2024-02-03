@@ -1,0 +1,96 @@
+{
+    "description": "Application + Left/Up/Right to Control Volume",
+    "manipulators":
+    [
+        {
+            "from":
+            {
+                "simultaneous":
+                [
+                    {
+                        "key_code": "application"
+                    },
+                    {
+                        "key_code": "left_arrow"
+                    }
+                ],
+                "modifiers":
+                {
+                    "optional":
+                    [
+                        "any"
+                    ]
+                }
+            },
+            "to":
+            [
+                {
+                    "key_code": "volume_decrement",
+                    "modifiers":
+                    []
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "from":
+            {
+                "simultaneous":
+                [
+                    {
+                        "key_code": "application"
+                    },
+                    {
+                        "key_code": "right_arrow"
+                    }
+                ],
+                "modifiers":
+                {
+                    "optional":
+                    [
+                        "any"
+                    ]
+                }
+            },
+            "to":
+            [
+                {
+                    "key_code": "volume_increment",
+                    "modifiers":
+                    []
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "from":
+            {
+                "simultaneous":
+                [
+                    {
+                        "key_code": "application"
+                    },
+                    {
+                        "key_code": "up_arrow"
+                    }
+                ],
+                "modifiers":
+                {
+                    "optional":
+                    [
+                        "any"
+                    ]
+                }
+            },
+            "to":
+            [
+                {
+                    "key_code": "mute",
+                    "modifiers":
+                    []
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}
