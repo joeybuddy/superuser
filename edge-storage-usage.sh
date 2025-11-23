@@ -34,8 +34,8 @@ format_bytes() {
 get_dir_size() {
     local dir=$1
     if [ -d "$dir" ]; then
-        # Use find and awk to sum up file sizes
-        find "$dir" -type f -exec stat -f%z {} \; 2>/dev/null | awk '{sum+=$1} END {print sum+0}'
+        # Use find with xargs for better performance
+        find "$dir" -type f -print0 2>/dev/null | xargs -0 stat -f%z 2>/dev/null | awk '{sum+=$1} END {print sum+0}'
     else
         echo "0"
     fi
@@ -53,8 +53,8 @@ calculate_edge_storage() {
         # Try to get home directory from /Users
         home_dir="/Users/$username"
         if [ ! -d "$home_dir" ]; then
-            # Try dscl command to get home directory
-            home_dir=$(dscl . -read "/Users/$username" NFSHomeDirectory 2>/dev/null | awk '{print $2}')
+            # Try dscl command to get home directory (handles paths with spaces)
+            home_dir=$(dscl . -read "/Users/$username" NFSHomeDirectory 2>/dev/null | grep NFSHomeDirectory | cut -d' ' -f2-)
             if [ -z "$home_dir" ] || [ ! -d "$home_dir" ]; then
                 echo -e "${RED}✗ User '$username' not found or home directory doesn't exist${NC}"
                 return 1
