@@ -75,6 +75,8 @@ def get_dir_size(path: Path) -> int:
 
 def get_home_directory(username: str) -> Optional[Path]:
     """Get the home directory for a given username."""
+    NFS_HOME_DIR_KEY = 'NFSHomeDirectory:'
+    
     current_user = getpass.getuser()
     
     if username == current_user:
@@ -95,8 +97,8 @@ def get_home_directory(username: str) -> Optional[Path]:
         )
         if result.returncode == 0:
             for line in result.stdout.splitlines():
-                if 'NFSHomeDirectory:' in line:
-                    path_str = line.split('NFSHomeDirectory:', 1)[1].strip()
+                if NFS_HOME_DIR_KEY in line:
+                    path_str = line.split(NFS_HOME_DIR_KEY, 1)[1].strip()
                     home_dir = Path(path_str)
                     if home_dir.exists() and home_dir.is_dir():
                         return home_dir
@@ -140,7 +142,7 @@ def calculate_edge_storage(username: str) -> bool:
             
             if size > 0:
                 total_size += size
-                print(f"  {label:<{LABEL_WIDTH}} {format_bytes(size):>{SIZE_WIDTH}}")
+                print(f"  {label + ':':<{LABEL_WIDTH}} {format_bytes(size):>{SIZE_WIDTH}}")
     
     if not found_any:
         print(f"  {Colors.YELLOW}⚠ No Microsoft Edge data found for user '{username}'{Colors.NC}")
