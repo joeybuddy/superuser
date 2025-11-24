@@ -4,7 +4,7 @@ A collection of useful scripts and tools for power users.
 
 ## Scripts
 
-### edge-storage-usage.sh
+### edge-storage-usage.py
 
 Calculate Microsoft Edge browser storage usage on macOS.
 
@@ -19,19 +19,19 @@ Calculate Microsoft Edge browser storage usage on macOS.
 
 ```bash
 # Calculate Edge storage for current user
-./edge-storage-usage.sh
+./edge-storage-usage.py
 
 # Calculate Edge storage for specific user(s)
-./edge-storage-usage.sh username1
+./edge-storage-usage.py username1
 
 # Calculate Edge storage for multiple users
-./edge-storage-usage.sh username1 username2 username3
+./edge-storage-usage.py username1 username2 username3
 ```
 
 #### Requirements
 
 - macOS operating system
-- Bash shell
+- Python 3.6 or higher
 - Read permissions for the target user directories
 
 #### Output Example
