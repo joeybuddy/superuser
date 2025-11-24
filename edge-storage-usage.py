@@ -16,6 +16,16 @@ from pathlib import Path
 from typing import Dict, Optional
 
 
+# Byte conversion constants
+KB = 1024
+MB = 1024 * 1024
+GB = 1024 * 1024 * 1024
+
+# Formatting constants
+LABEL_WIDTH = 30
+SIZE_WIDTH = 15
+
+
 # ANSI color codes
 class Colors:
     RED = '\033[0;31m'
@@ -27,14 +37,14 @@ class Colors:
 
 def format_bytes(bytes_size: int) -> str:
     """Format bytes to human-readable format."""
-    if bytes_size < 1024:
+    if bytes_size < KB:
         return f"{bytes_size}B"
-    elif bytes_size < 1048576:  # 1024 * 1024
-        return f"{bytes_size / 1024:.2f}KB"
-    elif bytes_size < 1073741824:  # 1024 * 1024 * 1024
-        return f"{bytes_size / 1048576:.2f}MB"
+    elif bytes_size < MB:
+        return f"{bytes_size / KB:.2f}KB"
+    elif bytes_size < GB:
+        return f"{bytes_size / MB:.2f}MB"
     else:
-        return f"{bytes_size / 1073741824:.2f}GB"
+        return f"{bytes_size / GB:.2f}GB"
 
 
 def get_dir_size(path: Path) -> int:
@@ -130,14 +140,14 @@ def calculate_edge_storage(username: str) -> bool:
             
             if size > 0:
                 total_size += size
-                print(f"  {label:<30} {format_bytes(size):>15}")
+                print(f"  {label:<{LABEL_WIDTH}} {format_bytes(size):>{SIZE_WIDTH}}")
     
     if not found_any:
         print(f"  {Colors.YELLOW}⚠ No Microsoft Edge data found for user '{username}'{Colors.NC}")
         return True
     
     print(f"{Colors.BLUE}──────────────────────────────────────────────────────────────{Colors.NC}")
-    print(f"  {Colors.GREEN}{'TOTAL:':<30} {format_bytes(total_size):>15}{Colors.NC}")
+    print(f"  {Colors.GREEN}{'TOTAL:':<{LABEL_WIDTH}} {format_bytes(total_size):>{SIZE_WIDTH}}{Colors.NC}")
     print(f"{Colors.BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{Colors.NC}")
     
     return True
